@@ -52,6 +52,7 @@ create table Post (
     _type enum('Homework','Note','Announcement','Comment', 'Question') not null, 				/*osv*/
     colorCode enum('red', 'green', 'yellow') not null,
     creatorEmail varchar(40),
+    _Date date,
     constraint Post_pk primary key (postID),
     constraint Post_fk_User foreign key (creatorEmail) 
 				references _User(email)
