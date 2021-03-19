@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Search",
+            "request": "launch",
+            "mainClass": "piazza.Search",
+            "projectName": "DatMod_DB2_7f3df3b8"
+        },
+        {
+            "type": "java",
             "name": "Launch DBConn",
             "request": "launch",
             "mainClass": "piazza.DBConn",
