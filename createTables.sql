@@ -1,9 +1,8 @@
 -- oppretter databasen til Viveka, Daniel og August
 
 create table Course (
-	
-    courseID char(7), /* format: TDT4145 */
-    _Name varchar(45) not null,
+	courseID char(7), /* format: TDT4145 */
+    _Name varchar(30) not null,
     term char(5), /* format: V2020, H2020 */ 
     anonymous bool,
     inviteCode varchar(10) not null,
@@ -43,12 +42,12 @@ create table Folder (
 					) ;
                     
 create table Post (
-	postID int auto_increment, #har endra så den inkrementerer automatisk for opprettelse av postID
+	postID int,
     title varchar(30) not null,
     author varchar (30),
     content varchar(100),
     courseID char(7),
-    _type enum('Homework','Note','Announcement','Comment', 'Question') not null, 				/*osv*/
+    _type enum('Homework','Note','Announcement','Question') not null, 				/*osv*/
     colorCode enum('red', 'green', 'yellow') not null,
     creatorEmail varchar(40),
     _Date date,
@@ -205,7 +204,3 @@ create table _Comment (
                 on delete cascade
 					) ;
                     
-					
-INSERT INTO Course VALUES('TDT4145', 'Datamodellering og databasesystemer', 'V2021', true, 12345);
-INSERT INTO _User VALUES('brukernavn@gmail.com', 'passord', 'Student');
-INSERT INTO Folder VALUES('1', 'TDT4145', 'Exam');
