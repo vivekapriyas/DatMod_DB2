@@ -9,7 +9,7 @@ public class Search extends ConnectorClass{
     public Search(String keyword){
         connect();
         this.keyword = keyword;
-                }
+        }
     
     public void executeSearch(){
         String query = "select distinct postID from post left outer join (_comment inner join followup using(followupnr)) using (postID) where title like ? or followup.content like ? or post.content like ?;";
