@@ -1,4 +1,5 @@
 -- oppretter databasen til Viveka, Daniel og August
+#endringer: post har et nytt felt: previousPostID
 
 create table Course (
 	courseID char(7), /* format: TDT4145 */
@@ -47,9 +48,10 @@ create table Post (
     author varchar (30),
     content varchar(100),
     courseID char(7),
-    _type enum('Homework','Note','Announcement','Comment', 'Question', 'Exam') not null, 				/*osv*/
+    _type enum('Homework','Note','Announcement','Comment', 'Question') not null, 				/*osv*/
     colorCode enum('red', 'green', 'yellow') not null,
     creatorEmail varchar(40),
+    previousPostID int,
     constraint Post_pk primary key (postID),
     constraint Post_fk_User foreign key (creatorEmail) 
 				references _User(email)
