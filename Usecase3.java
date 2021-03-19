@@ -2,7 +2,7 @@ package piazza;
 
 import java.sql.*;
 //arver fra DBConn abstraktklasse
-public class AnswerCtrl extends DBConn{
+public class AnswerCtrl extends ConnectorClass{
     private String postID;
     private String content;
     private PreparedStatement regStmt;
