@@ -1,5 +1,4 @@
 -- oppretter databasen til Viveka, Daniel og August
-#endringer: post har et nytt felt: previousPostID
 
 create table Course (
 	
