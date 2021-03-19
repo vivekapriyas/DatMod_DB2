@@ -1,5 +1,5 @@
 import java.sql.*;
-public class ConnectorClass {
+public abstract class ConnectorClass {
 
     Connection conn;
 
