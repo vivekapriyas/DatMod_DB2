@@ -17,6 +17,7 @@ public int addPost(String title, String author, String content, String courseID,
 
     try {
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO Post (title,author,content,type,colorCode,creator.email) " + "VALUES (?,?,?,?,?,?)");
+        
         preparedStatement.setString(2,title);
         preparedStatement.setString(3,author);
         preparedStatement.setString(4,content);
