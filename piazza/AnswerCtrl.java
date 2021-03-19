@@ -1,36 +1,38 @@
 package piazza;
-import java.sql.*;
 
-//arver fra ConnectorClass abstraktklasse
+import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+import java.sql.SQLException;
+
+//arver fra ConnectorClass 
 public class AnswerCtrl extends ConnectorClass{
-    private String postID;
-    private String content;
-    private PreparedStatement regStmt;
-    public AnswerCtrl(){
-        postID = null;
-        content = "";
+
+    public int postID;
+    public String content;
+
+    public AnswerCtrl(int postid, String content){
+        connect();
+        this.postID = postid;
+        this.content = content;
     }
 
-    public AnswerCtrl(String postID, String content){
-        this.postID = postID;
-        this.content = content;
+    public void createPost(){
         try{
-            regStmt = myConn.prepareStatement("INSERT INTO instructorsanswer VALUES((?),(?))");
-        }catch(Exception e){
-            System.out.println("***DB error during preparation of insert into instructoranswer***");
-        }    
-    }
-    public void createPost(String postID, String content){
-        //as long as post exists
-        if(postID != ""){
-            try{
-                regStmt.setString(1,postID);
-                regStmt.setString(2,content);
-                regStmt.execute();
-            } catch(Exception e){
-                System.out.println("***DB error during insert of InstructorAnswer postID= " +postID );            }
+            String insertion = "INSERT INTO instructorsanswer VALUES(?,?)";
+            PreparedStatement regStmt = conn.prepareStatement(insertion);
+            regStmt.setInt(1,this.postID);
+            regStmt.setString(2,this.content);
+            regStmt.execute();
+
         }
+        catch(SQLException e){
+            System.out.println("***DB error during preparation of insert into instructoranswer***");
+        }   
+    }
+
+    public static void main(String[] args) {
+        AnswerCtrl test = new AnswerCtrl(1,"Dette er et svar");
+        test.createPost();
     }
 }
-
 

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch AnswerCtrl",
+            "request": "launch",
+            "mainClass": "piazza.AnswerCtrl",
+            "projectName": "DatMod_DB2_7f3df3b8"
+        },
+        {
+            "type": "java",
             "name": "Launch Search",
             "request": "launch",
             "mainClass": "piazza.Search",
