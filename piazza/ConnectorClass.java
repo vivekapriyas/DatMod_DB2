@@ -1,23 +1,24 @@
+package piazza;
 import java.sql.*;
 import java.util.Properties;
 public class ConnectorClass {
 
     //private static final String DBName = "db";
     //private static final String DBURI = "jdbc:mysql://127.0.0.1/" + DBName + "?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
-    private static final String DBUsername = "root";
-    private static final String DBPassword = "RighteouSsql3211";
+    private static final String DBUsername = "vivekaps";
+    private static final String DBPassword = "Piki3lapskaus";
     
 
     protected Connection conn;
 
     public void connect() {
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        //Class.forName("com.mysql.cj.jdbc.Driver");
         Properties p = new Properties();
         p.put("user", DBUsername);
         p.put("password", DBPassword);
 
-        conn  = DriverManager.getConnection("jdbc:mysql://localhost:3306/db",p);
+        conn  = DriverManager.getConnection("jdbc:mysql://localhost:3306/db2",p);
         //conn = DriverManager.getConnection(DBURI, p); dette fungerer tydeligvis ikke
 
         /* PreparedStatement stmt = conn.prepareStatement("Select  * from course");
