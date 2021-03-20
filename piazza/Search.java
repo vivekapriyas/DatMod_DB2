@@ -31,6 +31,7 @@ public class Search extends ConnectorClass{
                 System.out.format("|%-8s|%n", postID);
 
                 }
+            System.out.println("----------");
         }
         catch (SQLException e){
             System.out.println("DB error while trying to add post: " + e);
