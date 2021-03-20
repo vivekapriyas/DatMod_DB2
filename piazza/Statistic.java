@@ -1,6 +1,7 @@
 package piazza;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Statistic extends ConnectorClass{
@@ -12,12 +13,13 @@ public class Statistic extends ConnectorClass{
     }
 
     public void showStatistics(){
-        //String cu = "(select * from enrolled where courseid = ?) as courseusers";
-        //String select = "select email,count(postID) as NumberRead, NumberPosted from (hasread right outer join"+cu+"using(email)) inner join "; 
-        //String posted = "(select email, count(postID) as NumberPosted from post right outer join" + cu + "on creatoremail = email";
-        //String grouping = "group by email) as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
+        String one = "select email,count(postID) as NumberRead, NumberPosted ";
+        String two = "from (hasread right outer join (select * from enrolled where courseid = ?) as courseusers  using(email)) "; 
+        String three = "inner join (select email, count(postID) as NumberPosted ";
+        String four = "from post right outer join (select * from enrolled where courseid = ?) as courseusers on creatoremail=email group by email) ";
+        String five = "as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
 
-        String query = "select email,count(postID) as NumberRead, NumberPosted from (hasread right outer join (select * from enrolled where courseid = ?) as courseusers  using(email)) inner join (select email, count(postID) as NumberPosted from post right outer join (select * from enrolled where courseid = ?) as courseusers on creatoremail = email group by email) as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
+        String query = one+two+three+four+five; 
 
         try{
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -25,7 +27,27 @@ public class Statistic extends ConnectorClass{
             stmt.setString(2, courseID);
 
             stmt.executeQuery();
-            System.out.println("yippi");
+
+            ResultSet rs = stmt.getResultSet();
+            
+            String column1 = "Username";
+            String column2 = "NumberRead";
+            String column3 = "NumberPosted";
+            System.out.println("\n\n------------------------------------------------");
+            System.out.format("|%-20s|%-12s|%-12s|%n",column1,column2,column3);
+            System.out.println("------------------------------------------------");
+        
+            while (rs.next()){                
+
+                String username = rs.getString("email");
+                int read = rs.getInt("NumberRead");
+                int posted = rs.getInt("NumberPosted");
+
+                System.out.format("|%-20s|%-12d|%-12d|%n", username, read,posted);
+                //System.out.println(username+" "+read+" "+posted);
+            }
+            System.out.println("------------------------------------------------");
+
         }
         catch (SQLException e){
             System.out.println("DB error while trying to add post: " + e);
