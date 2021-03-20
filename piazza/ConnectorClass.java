@@ -7,6 +7,7 @@ public class ConnectorClass {
     //private static final String DBURI = "jdbc:mysql://127.0.0.1/" + DBName + "?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
     private static final String DBUsername = "vivekaps";
     private static final String DBPassword = "Piki3lapskaus";
+    private static final String DBName = "db2";
     
 
     protected Connection conn;
@@ -18,7 +19,7 @@ public class ConnectorClass {
         p.put("user", DBUsername);
         p.put("password", DBPassword);
 
-        conn  = DriverManager.getConnection("jdbc:mysql://localhost:3306/db2",p);
+        conn  = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+DBName,p);
         //conn = DriverManager.getConnection(DBURI, p); dette fungerer tydeligvis ikke
 
         /* PreparedStatement stmt = conn.prepareStatement("Select  * from course");
