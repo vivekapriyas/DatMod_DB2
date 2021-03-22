@@ -205,7 +205,4 @@ create table _Comment (
                 on delete cascade
 					) ;
                     
-					
-INSERT INTO Course VALUES('TDT4145', 'Datamodellering og databasesystemer', 'V2021', true, 12345);
-INSERT INTO _User VALUES('brukernavn@gmail.com', 'passord', 'Student');
-INSERT INTO Folder VALUES('1', 'TDT4145', 'Exam');
+				

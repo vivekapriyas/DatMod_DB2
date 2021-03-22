@@ -8,7 +8,7 @@ public useCase2Controller() {
     connect();
 }
 
-protected static final String INSERT_POST_SQL = "INSERT INTO post(title, author, content, courseID, _type, colorCode, creatoremail) values(?, ?, ?, ?, ?, ?, ?) ";
+protected static final String INSERT_POST_SQL = "INSERT INTO post(title, author, content, courseID, _type, colorCode, creatoremail, _date) values(?, ?, ?, ?, ?, ?, ?, ?) ";
 protected static final String ANON_QUERY = "SELECT anonymous FROM Course WHERE CourseID = (?)"; 
 protected static final String SELECT_EXAM_FOLDER_QUERY = "SELECT folderID FROM Folder WHERE _name = (?)"; //spør ikke til courseID.... 
 protected static final String SELECT_LASTPOSTID_QUERY = "SELECT postID FROM Post WHERE postID = (SELECT max(postID) FROM Post)";
@@ -19,25 +19,28 @@ public void addPost(String title, String displayName, String content, String fol
     try {
         //henter dagens dato
         LocalDate date = LocalDate.now();
-        
-        String email = "augustlonningmeo@gmail.com";
+        int folderID = 0;
+        int postID = 0;
+        boolean anonymousAllowed =true;
+        String email = "marie@ntnu.no";
         String colorCode = "red";
         String courseID = "TDT4145";
         String author = displayName;
 
         //sjekker om faget vi skal poste i tillater anonyme posts
-        boolean anonymousAllowed;
         PreparedStatement anonStatement = conn.prepareStatement(ANON_QUERY);
         anonStatement.setString(1, courseID);
         ResultSet anonRs = anonStatement.executeQuery();
-        anonymousAllowed = anonRs.getBoolean("anonymous");
+        while (anonRs.next()) {
+            anonymousAllowed = anonRs.getBoolean("anonymous");
+        }
 
         //dersom anonymous lovlig, sett forfatter til det hen har skrevet inn
         if (displayName.equals(email) || !(anonymousAllowed)) {
             author = email;
             System.out.println("Anonymous name is not allowed in this course, so author has been set to email");
         } else {
-            author = displayName;
+            author = displayName; //&& anonymousALlowed
             System.out.println("Anonymous name is allowed, so author has been set to the inserted display name.");
         }
         // vi skal sette inn i post-tabellen: 1title,2author,3content,4courseID,5_type,6colorCode,7creatorEmail,8_Date
@@ -59,14 +62,18 @@ public void addPost(String title, String displayName, String content, String fol
         PreparedStatement findExamFolderID = conn.prepareStatement(SELECT_EXAM_FOLDER_QUERY);
         findExamFolderID.setString(1,folderName);
         ResultSet examFolderIDrs = findExamFolderID.executeQuery();
-        int folderID = examFolderIDrs.getInt("folderID");
-        System.out.println("FolderID has successfully been retrieved");
+        while (examFolderIDrs.next()) {
+            folderID = examFolderIDrs.getInt("folderID");
+            System.out.println("FolderID has successfully been retrieved");
+        }
         
         //må spørre etter PostID'en til posten vi nettopp laga (den ble autoinkrementert)
         PreparedStatement findPostIDPreparedStatement = conn.prepareStatement(SELECT_LASTPOSTID_QUERY);
         ResultSet lastpostIDrs = findPostIDPreparedStatement.executeQuery();
-        int postID = lastpostIDrs.getInt("postID");
-        System.out.println("PostID has successfully been retrieved");
+        while (lastpostIDrs.next()) {
+            postID = lastpostIDrs.getInt("postID");
+            System.out.println("PostID has successfully been retrieved");
+        }
 
         //må legge til post i riktig folder
         addPostToFolder(postID, folderID);
@@ -89,8 +96,9 @@ public void addPost(String title, String displayName, String content, String fol
         }        
     }
 
-    public static void main() {
-       
+    public static void main(String[] args) {
+       useCase2Controller test = new useCase2Controller();
+       test.addPost("tittel2", "maria", "dette er min spm plis svar", "Exam", "Question");
     }
 
 } //pretty much done
