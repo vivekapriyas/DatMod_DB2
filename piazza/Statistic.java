@@ -19,7 +19,7 @@ public class Statistic extends ConnectorClass{
         String four = "from post right outer join (select * from enrolled where courseid = ?) as courseusers on creatoremail=email group by email) ";
         String five = "as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
 
-        String query = one+two+three+four+five; 
+        final String query = one+two+three+four+five; 
 
         try{
             PreparedStatement stmt = conn.prepareStatement(query);

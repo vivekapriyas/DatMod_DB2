@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class LogIn extends ConnectorClass{
+public class LogInCtrl extends ConnectorClass{
     private String username;
     private String role;
     private String passord;
     private boolean success;
 
-    public LogIn(String username, String passord ){
+    public LogInCtrl(String username, String passord ){
         connect();
         this.username = username;
         this.passord = passord;
@@ -47,12 +47,13 @@ public class LogIn extends ConnectorClass{
         return success;
     }
 
+
     public String getRole(){
         return role;
     }
 
     public static void main(String[] args) {
-        LogIn test = new LogIn("anders@ntnu.no","anderspassord");
+        LogInCtrl test = new LogInCtrl("anders@ntnu.no","anderspassord");
         boolean check = test.executeLogIn();
         System.out.println(check);
     }
