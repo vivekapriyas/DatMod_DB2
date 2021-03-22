@@ -6,12 +6,16 @@ import java.sql.SQLException;
 
 public class Search extends ConnectorClass{
     public String keyword;
-    public Search(String keyword){
+    public Search(){
         connect();
-        this.keyword = keyword;
         }
     
-    public void executeSearch(){
+    public void setKeyword(String keyword){
+        this.keyword = keyword;
+    }
+
+    public void executeSearch(String keyword){
+        setKeyword(keyword);
         String query = "select distinct postID from post left outer join (_comment inner join followup using(followupnr)) using (postID) where title like ? or followup.content like ? or post.content like ?;";
         try{
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -40,8 +44,8 @@ public class Search extends ConnectorClass{
     }
 
     public static void main(String[] args) {
-        Search test = new Search("WAL");
-        test.executeSearch();
+        Search test = new Search();
+        test.executeSearch("WAL");
     }
 
 

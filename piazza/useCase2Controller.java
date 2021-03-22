@@ -4,8 +4,13 @@ import java.time.LocalDate;
 
 public class useCase2Controller extends ConnectorClass {
 
-public useCase2Controller() {
+    private String email;
+    private String courseID;
+
+public useCase2Controller(String email, String courseID) {
     connect();
+    this.email = email;
+    this.courseID = courseID;
 }
 
 protected static final String INSERT_POST_SQL = "INSERT INTO post(title, author, content, courseID, _type, colorCode, creatoremail, _date) values(?, ?, ?, ?, ?, ?, ?, ?) ";
@@ -22,9 +27,7 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
         int folderID;
         int postID;
         boolean anonymousAllowed;
-        String email = "marie@ntnu.no";
         String colorCode = "red";
-        String courseID = "TDT4145";
         String author = displayName;
 
         //sjekker om faget vi skal poste i tillater anonyme posts
@@ -138,7 +141,7 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
 
 
     public static void main(String[] args) {
-       useCase2Controller test = new useCase2Controller();
+       useCase2Controller test = new useCase2Controller("marie@ntnu.no","TDT4145");
        test.addPost("Hvordan gjør man prosjekt?", "Maria", "dette er min spm plis svar", "Exam", "Question");
     }
 
