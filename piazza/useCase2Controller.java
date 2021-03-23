@@ -12,14 +12,15 @@ public useCase2Controller(String email, String courseID) {
     this.email = email;
     this.courseID = courseID;
 }
-
+//queries 
 protected static final String INSERT_POST_SQL = "INSERT INTO post(title, author, content, courseID, _type, colorCode, creatoremail, _date) values(?, ?, ?, ?, ?, ?, ?, ?) ";
 protected static final String ANON_QUERY = "SELECT anonymous FROM Course WHERE CourseID = (?)"; 
 protected static final String SELECT_EXAM_FOLDER_QUERY = "SELECT folderID FROM Folder WHERE _name = (?)"; //spør ikke til courseID.... 
 protected static final String SELECT_LASTPOSTID_QUERY = "SELECT postID FROM Post WHERE postID = (SELECT max(postID) FROM Post)";
 protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolder(postID,folderID) values (?,?) ";
 
-    //the method to call on a useCase2ControllerObject
+    
+//the method to call on a useCase2ControllerObject
     public void addPost(String title, String displayName, String content, String folderName, String _type) {
 
         //init param
@@ -48,7 +49,8 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
         //må legge til post i riktig folder
         addPostToFolder(postID, folderID);
 }
-    //helpers
+    
+//helpers
     private boolean isAnonAllowed(String courseID) {
     boolean loc = false;
     try{
@@ -145,4 +147,4 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
        test.addPost("Hvordan gjør man prosjekt?", "Maria", "dette er min spm plis svar", "Exam", "Question");
     }
 
-} //pretty much done
+}
