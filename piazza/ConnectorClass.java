@@ -5,9 +5,9 @@ public class ConnectorClass {
 
     //private static final String DBName = "db";
     //private static final String DBURI = "jdbc:mysql://127.0.0.1/" + DBName + "?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
-    private static final String DBUsername = "vivekaps";
-    private static final String DBPassword = "Piki3lapskaus";
-    private static final String DBName = "db2";
+    private static final String DBUsername = "root";
+    private static final String DBPassword = "RighteouSsql3211";
+    private static final String DBName = "db";
     
 
     protected Connection conn;
