@@ -39,7 +39,7 @@ public class Piazza {
                 password = sc.nextLine();
     
                 log.setInput(name, password);
-
+                log.executeLogIn();
                 case 2:
                 return;
 

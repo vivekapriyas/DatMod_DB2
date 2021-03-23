@@ -143,8 +143,8 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
 
 
     public static void main(String[] args) {
-       PostCtrl test = new PostCtrl("marie@ntnu.no","TDT4145");
-       test.addPost("Hvordan gjør man prosjekt?", "Maria", "dette er min spm plis svar", "Exam", "Question");
+       PostCtrl test = new PostCtrl("anders@ntnu.no","TDT4145");
+       test.addPost("ny ffffffff", "Anders", "ny spm", "Exam", "Question");
     }
 
 }
