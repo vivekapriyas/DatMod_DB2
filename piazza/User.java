@@ -41,7 +41,7 @@ public class User {
     }
 
     public void makePost(){
-        useCase2Controller post = new useCase2Controller(this.username,this.activeCourse);
+        PostCtrl post = new PostCtrl(this.username,this.activeCourse);
         Scanner sc = new Scanner(System.in);
         
         System.out.println("Title: ");
@@ -93,7 +93,7 @@ public class User {
     }
 
     public void searchForKeyword(){
-        Search search = new Search();
+        SearchCtrl search = new SearchCtrl();
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter keyword: ");

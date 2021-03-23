@@ -2,12 +2,12 @@ package piazza;
 import java.sql. *;
 import java.time.LocalDate;
 
-public class useCase2Controller extends ConnectorClass {
+public class PostCtrl extends ConnectorClass {
 
     private String email;
     private String courseID;
 
-public useCase2Controller(String email, String courseID) {
+public PostCtrl(String email, String courseID) {
     connect();
     this.email = email;
     this.courseID = courseID;
@@ -143,7 +143,7 @@ protected static final String INSERT_POSTINFOLDER_SQL = "INSERT INTO PostInFolde
 
 
     public static void main(String[] args) {
-       useCase2Controller test = new useCase2Controller("marie@ntnu.no","TDT4145");
+       PostCtrl test = new PostCtrl("marie@ntnu.no","TDT4145");
        test.addPost("Hvordan gjør man prosjekt?", "Maria", "dette er min spm plis svar", "Exam", "Question");
     }
 

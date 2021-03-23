@@ -4,9 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Search extends ConnectorClass{
+public class SearchCtrl extends ConnectorClass{
     public String keyword;
-    public Search(){
+    public SearchCtrl(){
         connect();
         }
     
@@ -44,7 +44,7 @@ public class Search extends ConnectorClass{
     }
 
     public static void main(String[] args) {
-        Search test = new Search();
+        SearchCtrl test = new SearchCtrl();
         test.executeSearch("WAL");
     }
 
