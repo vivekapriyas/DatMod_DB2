@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+
 public class LogInCtrl extends ConnectorClass{
     private String username;
     private String role;
@@ -45,6 +46,12 @@ public class LogInCtrl extends ConnectorClass{
         }
 
         return success;
+    }
+
+    public void setInput(String username, String password){
+        this.username = username;
+        this.passord = password;
+        return;
     }
 
 
