@@ -1,18 +1,21 @@
 package piazza;
 import java.util.*; 
 
+//selve tekst interfacet
 public class Main {
 
     public static void main(String[] args) {
-        Piazza pz = new Piazza();
+        Piazza pz = new Piazza(); //piazza instans
         Scanner sc = new Scanner(System.in);
 
+        //må aller først logge inn
         pz.logIn();
 
+        //å være innlogget er en forutsetning for tilgang til mer funksjonalitet
         while (pz.getLoggedIN()){
 
-            System.out.println("You are now logged in as "+pz.getUsername()
-            +"\n Press 0 to change user"
+            System.out.println("\nYou are logged in as "+pz.getUsername()
+            +"\n\n Press 0 to change user"
             +"\n Press 1 to make a post"
             +"\n Press 2 to answer a post as an instructor"
             +"\n Press 3 to search the posts for a keyword"

@@ -4,19 +4,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+//usecase 4. kontroller for søk i poster
 public class SearchCtrl extends ConnectorClass{
     public String keyword;
+
     public SearchCtrl(){
         connect();
-        }
-    
-    public void setKeyword(String keyword){
-        this.keyword = keyword;
     }
-
+    
+    //utfører spørring mot post, comment, followup, instructorsanswer og studentsanswer tabellene
     public void executeSearch(String keyword){
         setKeyword(keyword);
         String query = "select distinct postID from post left outer join (_comment inner join followup using(followupnr)) using (postID) where title like ? or followup.content like ? or post.content like ?;";
+        
         try{
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, "%"+keyword+"%");
@@ -30,11 +31,13 @@ public class SearchCtrl extends ConnectorClass{
             System.out.println("\n\n----------");
             System.out.format("|%-8s|%n", firstCol);
             System.out.println("----------");
+            
             while (rs.next()) {
                 int postID = rs.getInt("postID");
                 System.out.format("|%-8s|%n", postID);
 
-                }
+            }
+            
             System.out.println("----------");
         }
         catch (SQLException e){
@@ -43,10 +46,9 @@ public class SearchCtrl extends ConnectorClass{
         
     }
 
-    public static void main(String[] args) {
-        SearchCtrl test = new SearchCtrl();
-        test.executeSearch("WAL");
+    //helper
+    public void setKeyword(String keyword){
+        this.keyword = keyword;
     }
-
 
 }
