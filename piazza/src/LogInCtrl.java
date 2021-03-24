@@ -16,12 +16,18 @@ public class LogInCtrl extends ConnectorClass{
         connect();
         this.username = username;
         this.passord = passord;
-        this.role = "";
         this.success = false;
     }
 
     public boolean executeLogIn(){
-        String query = "select password, role from _user where email=?";
+        //sjekker om bruker finnes i databasen
+        if (!checkExistence(username)){ 
+            System.out.println("Username not found");
+            return success;
+        }
+
+        //sql query: henter passord og rolle (Student/Instructor) til bruker
+        String query = "select password, role from _user where email=?"; 
         
         try{
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -48,7 +54,34 @@ public class LogInCtrl extends ConnectorClass{
         return success;
     }
 
-    public void setInput(String username, String password){
+    //helpers
+    //sjekker ekstistens av bruker
+    private boolean checkExistence(String email){
+        //teller antall rader med email = input brukernavn
+        //gir ut 0/1, tilsvarende false/true
+        String query = "select count(*) from _user where email=?";
+        boolean exists = false;
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, email);
+            stmt.executeQuery();
+
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()){
+                exists = rs.getBoolean(1);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("DB error when checking for user-existence: "+e);
+        }
+
+        return exists;
+    }
+
+
+    //public: skal brukes i piazza-klassen, i tilfelle feil ved første innlogginsforsøk
+    public void setInput(String username, String password){ 
         this.username = username;
         this.passord = password;
         return;
@@ -58,11 +91,4 @@ public class LogInCtrl extends ConnectorClass{
     public String getRole(){
         return role;
     }
-
-    public static void main(String[] args) {
-        LogInCtrl test = new LogInCtrl("anders@ntnu.no","anderspassord");
-        boolean check = test.executeLogIn();
-        System.out.println(check);
-    }
-
 }

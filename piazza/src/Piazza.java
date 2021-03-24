@@ -2,6 +2,7 @@ package piazza;
 import java.util.*;  
 
 
+//samler usecasene og implementerer logikk
 public class Piazza {
 
     private String username;
@@ -18,29 +19,36 @@ public class Piazza {
 
     //Usecase 1: logge seg inn
     public void logIn(){
+
+        //input fra bruker
         Scanner sc= new Scanner(System.in);
         System.out.println("Username: ");
         String name = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
 
-        LogInCtrl log = new LogInCtrl(name,password);
+        LogInCtrl log = new LogInCtrl(name,password); //LogInCTRL håndterer sql
 
-        while (! log.executeLogIn()){
+
+        //dersom login feiler kan man prøve på nytt
+        while (! log.executeLogIn()){ 
             System.out.println("Wrong username or password");
             System.out.println("Press 1 to try again or 2 to break");
 
             int check = sc.nextInt();
             switch(check){
                 case 1:
-                System.out.println("USername: ");
+                System.out.println("Username: ");
                 name = sc.nextLine();
                 System.out.println("Password: ");
                 password = sc.nextLine();
     
                 log.setInput(name, password);
                 log.executeLogIn();
+
                 case 2:
+                //velger å ikke prøve på nytt
+                //loggedIn fortsetter å være false
                 return;
 
             }
@@ -56,9 +64,10 @@ public class Piazza {
 
     //Usecase 2: lage Post
     public void makePost(){
-        PostCtrl post = new PostCtrl(getUsername(),getActiveCourse());
+        PostCtrl post = new PostCtrl(getUsername(),getActiveCourse()); //PostCTrl håndetere sql
         Scanner sc = new Scanner(System.in);
         
+        //input fra bruker
         System.out.println("Title: ");
         String title = sc.nextLine();
         System.out.println("Content: ");
@@ -67,27 +76,39 @@ public class Piazza {
         String foldername = sc.nextLine();
         System.out.println("Type: ");
         String type = sc.nextLine();
-        System.out.println("Choose your display name: ");
-        String dispname = sc.nextLine();
+        String anonWanted = "";
+        boolean anonAllowed = post.isAnonAllowed(getActiveCourse());
+
+        //hvis emnet tillater å poste anonymt blir bruker spurt om han/hun ønsker det
+        if (anonAllowed){
+            System.out.println("Do you want to post anonymously? Y/N");
+            anonWanted = sc.nextLine();
+        }
+        else{
+            anonWanted = "N";
+        }
+
         //sc.close();
         
-        post.addPost(title, dispname, content, foldername, type);
+        post.addPost(title, anonWanted, anonAllowed, content, foldername, type);
         return;
     }
 
     //Usecase 3: en instruktør svarer på en post
     public void answerPostInstructor(){
+        //kun instruktører kan svare i answeredByInstructor
         if (! getRole().equals("Instructor")){
             System.out.println("You are not authorized to answer as an instructor.");
             return;
         }
 
-        AnswerCtrl answer = new AnswerCtrl();
+        AnswerCtrl answer = new AnswerCtrl(getUsername()); //AnswerCtrl håndterer sql
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter postID: ");
         int postid = sc.nextInt();
 
+        //dersom posten instruktør ønsker å svare på ikke finnes kan han/hun prøve på nytt
         while(! answer.checkPostExist(postid)){
             System.out.println("PostID does not exist.");
             System.out.println("Press 1 to enter existing PostID or press 2 to break");
@@ -96,8 +117,10 @@ public class Piazza {
             switch(check){
                 case 1:
                 postid = sc.nextInt();
+                break;
 
                 case 2:
+                //velger å ikke svare på en post likevel
                 return;
             }
         }
@@ -105,10 +128,9 @@ public class Piazza {
         System.out.println("Post found");
         System.out.println("Enter answer: ");
         String content = sc.nextLine();
+        content = sc.nextLine();
 
         answer.createInstructorAnswer(postid, content);
-        answer.createAnsweredByInstructor(postid);
-        answer.postAnsweredByInstructor(postid);
       
         //sc.close();
         return;
@@ -117,8 +139,9 @@ public class Piazza {
 
     //Usecase 4: lete gjennom poster etter et keyword
     public void searchForKeyword(){
-        SearchCtrl search = new SearchCtrl();
+        SearchCtrl search = new SearchCtrl(); //håndterer sql
 
+        //input fra bruker
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter keyword: ");
         String keyword = sc.nextLine();
@@ -131,8 +154,9 @@ public class Piazza {
 
     //Usecase 5: en intruktør ser på statistikk over brukere i faget
     public void checkStatistics(){
+        //kun instruktører kan sjekke brukerstatistikk i et emne
         if (getRole().equals(("Instructor"))){
-            Statistic stats = new Statistic(getActiveCourse());
+            Statistic stats = new Statistic(getActiveCourse()); //håndterer sql
             stats.showStatistics();
         }
         else{

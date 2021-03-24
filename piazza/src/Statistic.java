@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+//usecase 5: kontroller for å sjekke brukerstatistikk i emnet
 public class Statistic extends ConnectorClass{
     public String courseID;
 
@@ -11,14 +13,19 @@ public class Statistic extends ConnectorClass{
         connect();
         this.courseID = courseID;
     }
+    
+    //sql spørring mot post, hasread, enrolled  og user tabellene
+    //inkluderer kun brukere som tar emnet. inkluderer ikke statistikk om instruktører i emnet
+    //inkluderer også ikkea-aktive brukere
+    String one = "select email,count(postID) as NumberRead, NumberPosted ";
+    String two = "from (hasread right outer join (select * from (select * from enrolled right outer join _user using(email) where role = 'Student') as students where courseid = ?) as courseusers  using(email)) "; 
+    String three = "inner join (select email, count(postID) as NumberPosted ";
+    String four = "from post right outer join (select * from enrolled where courseid = ?) as courseusers on creatoremail=email group by email) ";
+    String five = "as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
 
+    
+    //utfører spørringen
     public void showStatistics(){
-        String one = "select email,count(postID) as NumberRead, NumberPosted ";
-        String two = "from (hasread right outer join (select * from enrolled where courseid = ?) as courseusers  using(email)) "; 
-        String three = "inner join (select email, count(postID) as NumberPosted ";
-        String four = "from post right outer join (select * from enrolled where courseid = ?) as courseusers on creatoremail=email group by email) ";
-        String five = "as Posted using(email) group by email order by NumberRead desc,NumberPosted desc";
-
         final String query = one+two+three+four+five; 
 
         try{
@@ -52,11 +59,6 @@ public class Statistic extends ConnectorClass{
         catch (SQLException e){
             System.out.println("DB error while trying to add post: " + e);
         }
-    }
-
-    public static void main(String[] args) {
-        Statistic test = new Statistic("TMA4180");
-        test.showStatistics();
     }
 
 }
