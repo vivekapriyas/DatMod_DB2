@@ -1,4 +1,4 @@
-package piazza;
+package piazza.src;
 import java.sql. *;
 import java.time.LocalDate;
 
@@ -109,8 +109,7 @@ public class PostCtrl extends ConnectorClass {
             PreparedStatement PostInFolderPreparedStatement = conn.prepareStatement(INSERT_POSTINFOLDER_SQL);
             PostInFolderPreparedStatement.setInt(1, postID);
             PostInFolderPreparedStatement.setInt(2, folderID);   
-            PostInFolderPreparedStatement.executeUpdate();
-            System.out.println("Post has successfully been added to Folder");            
+            PostInFolderPreparedStatement.executeUpdate();          
 
         }
         catch (SQLException e) {
@@ -127,7 +126,6 @@ public class PostCtrl extends ConnectorClass {
         ResultSet examFolderIDrs = findExamFolderID.executeQuery();
         while (examFolderIDrs.next()) {
             folderID = examFolderIDrs.getInt("folderID");
-            System.out.println("FolderID has successfully been retrieved");
         }
     } catch (SQLException e) {
         System.out.println("DB error while trying to find FolderID.");
@@ -144,7 +142,6 @@ public class PostCtrl extends ConnectorClass {
         ResultSet lastpostIDrs = findPostIDPreparedStatement.executeQuery();
         while (lastpostIDrs.next()) {
             localpostID = lastpostIDrs.getInt("postID");
-            System.out.println("PostID has successfully been retrieved");
             }
         } catch (SQLException e) {
             System.out.println("DB error while trying to find postID");

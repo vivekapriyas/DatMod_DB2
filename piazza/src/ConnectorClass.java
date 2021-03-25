@@ -1,4 +1,4 @@
-package piazza;
+package piazza.src;
 import java.sql.*;
 import java.util.Properties;
 
