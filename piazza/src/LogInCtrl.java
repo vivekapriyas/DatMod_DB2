@@ -1,11 +1,11 @@
-package piazza;
+package piazza.src;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-
+//usecase 1: kontroller for innlogging 
 public class LogInCtrl extends ConnectorClass{
     private String username;
     private String role;
@@ -13,7 +13,7 @@ public class LogInCtrl extends ConnectorClass{
     private boolean success;
 
     public LogInCtrl(String username, String passord ){
-        connect();
+        connect(); //tilkobling til databasen
         this.username = username;
         this.passord = passord;
         this.success = false;
@@ -39,6 +39,7 @@ public class LogInCtrl extends ConnectorClass{
                 String userpassword = rs.getString(1);
                 String userrole = rs.getString(2);
 
+                //sjekker om brukerinput passord stemmer
                 if(this.passord.equals(userpassword) ){
                     success = true;
                     role = userrole;
@@ -81,13 +82,14 @@ public class LogInCtrl extends ConnectorClass{
 
 
     //public: skal brukes i piazza-klassen, i tilfelle feil ved første innlogginsforsøk
+    //endrer username og password attributtene
     public void setInput(String username, String password){ 
         this.username = username;
         this.passord = password;
         return;
     }
 
-
+    //henter rolle-attributtet
     public String getRole(){
         return role;
     }

@@ -1,4 +1,4 @@
-package piazza;
+package piazza.src;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,7 +72,7 @@ public class AnswerCtrl extends ConnectorClass{
         }
 
         //sjekker om det er bruker som har svart på samme post fra før eller en annen instruktør
-        //hhv oppdaterer snweredbyinstructor eller lager ny rad
+        //hhv oppdaterer answeredbyinstructor eller lager ny rad
         if(checkWhoAnswered(postid).equals(this.username)){
             updateAnsweredByInstructor(postID);
         }

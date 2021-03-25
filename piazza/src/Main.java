@@ -1,4 +1,4 @@
-package piazza;
+package piazza.src;
 import java.util.*; 
 
 //selve tekst interfacet

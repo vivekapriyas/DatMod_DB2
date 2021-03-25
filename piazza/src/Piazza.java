@@ -1,4 +1,4 @@
-package piazza;
+package piazza.src;
 import java.util.*;  
 
 
@@ -19,6 +19,10 @@ public class Piazza {
 
     //Usecase 1: logge seg inn
     public void logIn(){
+
+        //kun lagt inn for å gjøre sensur lettere
+        System.out.println("Username=anders@ntnu.no, password=anderspassword to log in as a student"
+                        +"\nUsername=stein@ntnu.no, password=steinspassword to log in as an instructor");  
 
         //input fra bruker
         Scanner sc= new Scanner(System.in);
