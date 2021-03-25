@@ -22,7 +22,7 @@ public class Piazza {
 
         //kun lagt inn for å gjøre sensur lettere
         System.out.println("Username=anders@ntnu.no, password=anderspassword to log in as a student"
-                        +"\nUsername=stein@ntnu.no, password=steinspassword to log in as an instructor");  
+                        +"\nUsername=stein@ntnu.no, password=steinspassword to log in as an instructor\n");  
 
         //input fra bruker
         Scanner sc= new Scanner(System.in);
@@ -160,7 +160,7 @@ public class Piazza {
     public void checkStatistics(){
         //kun instruktører kan sjekke brukerstatistikk i et emne
         if (getRole().equals(("Instructor"))){
-            Statistic stats = new Statistic(getActiveCourse()); //håndterer sql
+            StatisticCtrl stats = new StatisticCtrl(getActiveCourse()); //håndterer sql
             stats.showStatistics();
         }
         else{

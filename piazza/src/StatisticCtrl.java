@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 
 //usecase 5: kontroller for å sjekke brukerstatistikk i emnet
-public class Statistic extends ConnectorClass{
+public class StatisticCtrl extends ConnectorClass{
     public String courseID;
 
-    public Statistic(String courseID){
+    public StatisticCtrl(String courseID){
         connect();
         this.courseID = courseID;
     }

@@ -16,7 +16,8 @@ public class SearchCtrl extends ConnectorClass{
     //utfører spørring mot post, comment, followup, instructorsanswer og studentsanswer tabellene
     public void executeSearch(String keyword){
         setKeyword(keyword);
-        String query = "select distinct postID from post left outer join (_comment inner join followup using(followupnr)) using (postID) where title like ? or followup.content like ? or post.content like ?;";
+        String query = "select distinct postID from post left outer join (_comment inner join followup using(followupnr)) using (postID)" 
+                        +"where title like ? or followup.content like ? or post.content like ?;";
         
         try{
             PreparedStatement stmt = conn.prepareStatement(query);
