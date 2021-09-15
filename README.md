@@ -1,2 +1,4 @@
-# DatMod_DB2
-TDT4145 - Data Modelling, Databases and Database Management Systems  Projekt Spring 21
+# Piazza
+Model of the Q&A learning platform piazza (https://www.piazza.com).
+
+SQl script constructing a database structure and interface implementation in Java with JDBC.
